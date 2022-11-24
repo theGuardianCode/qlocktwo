@@ -1,4 +1,13 @@
-.main {
+h3 {
     word-spacing: 30px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#main {
+    padding: 50px;
+}
+
+body {
+    background-color: rgb(255, 203, 164);
+    color: rgb(119, 86, 46);
 }
