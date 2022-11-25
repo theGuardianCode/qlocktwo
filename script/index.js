@@ -5,6 +5,8 @@ let wordArr = [];
 let timeString = {};
 let remainder = 0;
 
+let dotDiv = document.getElementById("dots");
+
 let mainDiv = document.getElementById("main");
 
 
@@ -65,7 +67,7 @@ const timeToWords = (time) => {
             connector: "to",
             hour: hourWords[hour]
         };
-    } else if (roundedMinute == 55 || roundedMinute == 50 || roundedMinute == 40 || roundedMinute == 25) {
+    } else if (roundedMinute == 55 || roundedMinute == 50 || roundedMinute == 40 || roundedMinute == 35 || roundedMinute == 25) {
         timeString = {
             minute: minuteWords[(60 - roundedMinute) / 5 - 1],
             connector: "to",
@@ -84,7 +86,8 @@ const getTime = () => {
         dots.push("•");
     }
 
-    console.log(timeString);
+    dotDiv.innerHTML = ' ';
+    dotDiv.innerHTML = dots.join(' ');
 
     for (let i in timeString) {
         
@@ -97,9 +100,9 @@ const getTime = () => {
         const upperString = timeString[i].toUpperCase();
         const newString = upperString.split("").join(" ");
 
-        const index = grid.indexOf(newString);
+        console.log(newString);
 
-        console.log(grid);
+        const index = grid.indexOf(newString);
 
         let updatedGrid = grid.substring(0, index) + `<span style="color: white">` + grid.substring(index, index + newString.length) + "</span>" + grid.substring(index + newString.length);
         mainDiv.innerHTML = ' ';
