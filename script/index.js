@@ -7,22 +7,20 @@ let remainder = 0;
 
 let dotDiv = document.getElementById("dots");
 
-let mainDiv = document.getElementById("main");
+let mainDiv;
 
-
-let grid = mainDiv.innerHTML;
+let grid;
 
 const timeToWords = (time) => {
     timeString = {}
 
     let simpleTime = time.split(":");
+    // let simpleTime = ['16', '36', '50'];
     let hour = parseInt(simpleTime[0]);
     let minute = parseInt(simpleTime[1]);
     let seconds = simpleTime[2];
 
-    wordArr.push(hourWords[hour > 12 ? hour - 12 : hour - 1]);
-
-    console.log(simpleTime);
+    wordArr.push(hourWords[hour > 12 ? hour - 13 : hour - 1]);
 
     let roundedMinute;
     if (minute % 5 == 0) {
@@ -65,15 +63,17 @@ const timeToWords = (time) => {
         timeString = {
             minute: "quarter",
             connector: "to",
-            hour: hourWords[hour]
+            hour: hourWords[(hourWords.indexOf(wordArr[0]) + 1)]
         };
     } else if (roundedMinute == 55 || roundedMinute == 50 || roundedMinute == 40 || roundedMinute == 35 || roundedMinute == 25) {
         timeString = {
             minute: minuteWords[(60 - roundedMinute) / 5 - 1],
             connector: "to",
-            hour: hourWords[hour]
+            hour: hourWords[(hourWords.indexOf(wordArr[0]) + 1)]
         };
     }
+
+    console.log(timeString);
 };
 
 const getTime = () => {
@@ -91,16 +91,22 @@ const getTime = () => {
 
     for (let i in timeString) {
         
-        if (Object.keys(timeString)[i] == "hour") {
-            grid = document.getElementById("hourblock");
+        if (i == 'hour') {
+            mainDiv = document.getElementById("hourblock");
         } else {
-            grid = mainDiv.innerHTML;
+            mainDiv = document.getElementById("main");
         }
 
-        const upperString = timeString[i].toUpperCase();
-        const newString = upperString.split("").join(" ");
+        grid = mainDiv.innerHTML;
 
-        console.log(newString);
+        const upperString = timeString[i].toUpperCase();
+        let newString = upperString.split("").join(" ");
+
+        if (newString.indexOf('  ') != -1 ) {
+            const gapIndex = newString.indexOf('  ');
+            const updatedString = newString.substring(0, gapIndex) + newString.substring(gapIndex + 2);
+            newString = updatedString;
+        }
 
         const index = grid.indexOf(newString);
 
